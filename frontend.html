@@ -1,23 +1,47 @@
-<html>
-<head><title>Valve Control</title></head>
-<body>
-    <h1>Valve Control Panel</h1>
-    <button onclick="changeValveStatus('open')">Open Valve</button>
-    <button onclick="changeValveStatus('close')">Close Valve</button>
+
+    <!-- Schedule Settings for Each Valve -->
+    <!-- Valve 1 -->
+    <div class="time-input">
+        <label class="label">Set Open Time for Valve 1 (HH:MM):</label>
+        <input type="time" id="openTimeValve1">
+        <button onclick="setTime('valve1', 'open', document.getElementById('openTimeValve1').value)">Set Open Time</button>
+    </div>
+    <div class="time-input">
+        <label class="label">Set Close Time for Valve 1 (HH:MM):</label>
+        <input type="time" id="closeTimeValve1">
+        <button onclick="setTime('valve1', 'close', document.getElementById('closeTimeValve1').value)">Set Close Time</button>
+    </div>
+
+    <!-- Valve 2 -->
+    <div class="time-input">
+        <label class="label">Set Open Time for Valve 2 (HH:MM):</label>
+        <input type="time" id="openTimeValve2">
+        <button onclick="setTime('valve2', 'open', document.getElementById('openTimeValve2').value)">Set Open Time</button>
+    </div>
+    <div class="time-input">
+        <label class="label">Set Close Time for Valve 2 (HH:MM):</label>
+        <input type="time" id="closeTimeValve2">
+        <button onclick="setTime('valve2', 'close', document.getElementById('closeTimeValve2').value)">Set Close Time</button>
+    </div>
+
+    <!-- Valve 3 -->
+    <div class="time-input">
+        <label class="label">Set Open Time for Valve 3 (HH:MM):</label>
+        <input type="time" id="openTimeValve3">
+        <button onclick="setTime('valve3', 'open', document.getElementById('openTimeValve3').value)">Set Open Time</button>
+    </div>
+    <div class="time-input">
+        <label class="label">Set Close Time for Valve 3 (HH:MM):</label>
+        <input type="time" id="closeTimeValve3">
+        <button onclick="setTime('valve3', 'close', document.getElementById('closeTimeValve3').value)">Set Close Time</button>
+    </div>
 
     <script>
-        function changeValveStatus(status) {
-            fetch('/api/valve', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ deviceId: 'your_device_id', status: status }),
-            })
-            .then(response => response.json())
-            .then(data => console.log(data));
+        // existing changeValveStatus function...
+
+        function setTime(valve, action, time) {
+            // existing setTime function...
         }
     </script>
 </body>
 </html>
-
