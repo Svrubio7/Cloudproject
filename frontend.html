@@ -1,3 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Valve Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 40px;
+        }
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #367c39;
+        }
+        .button-close {
+            background-color: #f44336;
+        }
+        .button-close:hover {
+            background-color: #d7382b;
+        }
+        .time-input {
+            margin-top: 20px;
+            text-align: left;
+            display: inline-block;
+        }
+        .label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="time"] {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        @media (max-width: 600px) {
+            .time-input, .button {
+                width: 100%;
+                box-sizing: border-box;
+            }
+            input[type="time"] {
+                width: calc(100% - 120px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Valve Control Panel</h1>
+    
+    <!-- Valve Control Buttons -->
+    <div>
+        <button class="button" onclick="changeValveStatus('valve1', 'open')">Open Valve 1</button>
+        <button class="button button-close" onclick="changeValveStatus('valve1', 'close')">Close Valve 1</button>
+    </div>
+    <div>
+        <button class="button" onclick="changeValveStatus('valve2', 'open')">Open Valve 2</button>
+        <button class="button button-close" onclick="changeValveStatus('valve2', 'close')">Close Valve 2</button>
+    </div>
+    <div>
+        <button class="button" onclick="changeValveStatus('valve3', 'open')">Open Valve 3</button>
+        <button class="button button-close" onclick="changeValveStatus('valve3', 'close')">Close Valve 3</button>
+    </div>
 
     <!-- Schedule Settings for Each Valve -->
     <!-- Valve 1 -->
@@ -45,3 +128,4 @@
     </script>
 </body>
 </html>
+
