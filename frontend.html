@@ -1,1 +1,23 @@
+<html>
+<head><title>Valve Control</title></head>
+<body>
+    <h1>Valve Control Panel</h1>
+    <button onclick="changeValveStatus('open')">Open Valve</button>
+    <button onclick="changeValveStatus('close')">Close Valve</button>
+
+    <script>
+        function changeValveStatus(status) {
+            fetch('/api/valve', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ deviceId: 'your_device_id', status: status }),
+            })
+            .then(response => response.json())
+            .then(data => console.log(data));
+        }
+    </script>
+</body>
+</html>
 
