@@ -1,30 +1,49 @@
-# Back-end of the app
-from flask import Flask, request, jsonify, render_template
-from apscheduler.schedulers.background import BackgroundScheduler
+from flask import Flask, request
+import threading
+import datetime
 
 app = Flask(__name__)
-scheduler = BackgroundScheduler()
-scheduler.start()
 
-def control_valve(valve_id, action):
-    print(f"Controlling {valve_id}: {action}")
-    # Add hardware control logic here
+valve_status = {
+    'valve1': 'closed',
+    'valve2': 'closed',
+    'valve3': 'closed',
+    'valve4': 'closed'
+}
 
-@app.route('/')
-def index():
-    return render_template('frontend.html')
+def schedule_valve(valve, action, time_str):
+    time_format = "%H:%M"
+    target_time = datetime.datetime.strptime(time_str, time_format).time()
+    now = datetime.datetime.now().time()
 
-@app.route('/api/set-time', methods=['POST'])
-def set_time():
+    # Calculate time difference
+    delta_seconds = (datetime.datetime.combine(datetime.date.today(), target_time) - 
+                     datetime.datetime.combine(datetime.date.today(), now)).seconds
+
+    if delta_seconds < 0:
+        # If time is past, schedule for the next day
+        delta_seconds += 86400  # seconds in a day
+
+    threading.Timer(delta_seconds, change_valve_status, [valve, action]).start()
+
+def change_valve_status(valve, action):
+    global valve_status
+    valve_status[valve] = action
+    print(f"Valve {valve} is now {action}")
+
+@app.route('/control', methods=['POST'])
+def control():
     data = request.json
-    valve_id = data['deviceId']
+    valve = data['valve']
     action = data['action']
-    time = data['time']
+    time = data.get('time')
 
-    # Convert 'time' to a schedule format and add to scheduler
-    # Example: scheduler.add_job(control_valve, trigger='cron', hour=time_hour, minute=time_minute, args=[valve_id, action])
+    if time:
+        schedule_valve(valve, action, time)
+    else:
+        change_valve_status(valve, action)
 
-    return jsonify(success=True)
+    return f"Request to {action} {valve} received."
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
