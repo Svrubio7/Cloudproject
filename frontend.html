@@ -118,12 +118,42 @@
         <input type="time" id="closeTimeValve3">
         <button onclick="setTime('valve3', 'close', document.getElementById('closeTimeValve3').value)">Set Close Time</button>
     </div>
+    
+     <!-- Valve 4 -->
+    <div>
+        <button class="button" onclick="changeValveStatus('valve4', 'open')">Open Valve 4</button>
+        <button class="button button-close" onclick="changeValveStatus('valve4', 'close')">Close Valve 4</button>
+    </div>
 
+    <!-- Schedule Settings for Valve 4 -->
+    <div class="time-input">
+        <label class="label">Set Open Time for Valve 4 (HH:MM):</label>
+        <input type="time" id="openTimeValve4">
+        <button onclick="setTime('valve4', 'open', document.getElementById('openTimeValve4').value)">Set Open Time</button>
+    </div>
+    <div class="time-input">
+        <label class="label">Set Close Time for Valve 4 (HH:MM):</label>
+        <input type="time" id="closeTimeValve4">
+        <button onclick="setTime('valve4', 'close', document.getElementById('closeTimeValve4').value)">Set Close Time</button>
+    </div>
     <script>
-        // existing changeValveStatus function...
+        function sendRequest(valve, action, time = null) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:5000/control", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify({valve: valve, action: action, time: time}));
+
+        xhr.onload = function() {
+            console.log(xhr.responseText);
+            }
+        }
+
+        function changeValveStatus(valve, action) {
+            sendRequest(valve, action);
+        }
 
         function setTime(valve, action, time) {
-            // existing setTime function...
+            sendRequest(valve, action, time);
         }
     </script>
 </body>
