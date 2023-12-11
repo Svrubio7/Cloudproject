@@ -69,6 +69,11 @@
 
     </style>
     <script>
+        
+        window.onunload = window.onbeforeunload = function() {
+            navigator.sendBeacon('/logout');
+        };
+
         // This function could be used to send a command to open or close a valve immediately.
         function changeValveStatus(valveId, action) {
             fetch('/api/change-valve-status', {
