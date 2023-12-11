@@ -7,12 +7,7 @@ app.secret_key = 'your_secret_key'
 scheduler = BackgroundScheduler()
 scheduler.start()
 
-valve_status = {
-    "valve1": "closed",
-    "valve2": "closed",
-    "valve3": "closed",
-    "valve4": "closed"
-}
+valve_status = {}
 
 def control_valve(valve_id, action):
     global valve_status
