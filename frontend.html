@@ -3,157 +3,87 @@
 <head>
     <title>Valve Control</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
-            color: #333;
-        }
-        h1 {
-            color: #4CAF50;
-            margin-bottom: 40px;
-        }
-        .button {
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .button:hover {
-            background-color: #367c39;
-        }
-        .button-close {
-            background-color: #f44336;
-        }
-        .button-close:hover {
-            background-color: #d7382b;
-        }
-        .time-input {
-            margin-top: 20px;
-            text-align: left;
-            display: inline-block;
-        }
-        .label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        input[type="time"] {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 8px;
-            font-size: 16px;
-            margin-right: 10px;
-        }
-        @media (max-width: 600px) {
-            .time-input, .button {
-                width: 100%;
-                box-sizing: border-box;
-            }
-            input[type="time"] {
-                width: calc(100% - 120px);
-            }
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; padding: 20px; color: #333; }
+        h1, h2 { color: #4CAF50; margin-bottom: 20px; }
+        .button { background-color: #4CAF50; border: none; border-radius: 4px; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; transition: background-color 0.3s ease; }
+        .button.button-close { background-color: #f44336; }
+        .time-input { margin-top: 20px; text-align: center; display: inline-block; }
+        .label { display: block; margin-bottom: 10px; font-weight: bold; }
+        input[type="time"] { border: 1px solid #ddd; border-radius: 4px; padding: 8px; font-size: 16px; margin-right: 10px; }
+        @media (max-width: 600px) { .time-input, .button { width: 100%; box-sizing: border-box; } input[type="time"] { width: calc(100% - 20px); } }
     </style>
 </head>
 <body>
     <h1>Valve Control Panel</h1>
-    
-    <!-- Valve Control Buttons -->
-    <div>
-        <button class="button" onclick="changeValveStatus('valve1', 'open')">Open Valve 1</button>
-        <button class="button button-close" onclick="changeValveStatus('valve1', 'close')">Close Valve 1</button>
-    </div>
-    <div>
-        <button class="button" onclick="changeValveStatus('valve2', 'open')">Open Valve 2</button>
-        <button class="button button-close" onclick="changeValveStatus('valve2', 'close')">Close Valve 2</button>
-    </div>
-    <div>
-        <button class="button" onclick="changeValveStatus('valve3', 'open')">Open Valve 3</button>
-        <button class="button button-close" onclick="changeValveStatus('valve3', 'close')">Close Valve 3</button>
-    </div>
 
-    <!-- Schedule Settings for Each Valve -->
-    <!-- Valve 1 -->
-    <div class="time-input">
-        <label class="label">Set Open Time for Valve 1 (HH:MM):</label>
-        <input type="time" id="openTimeValve1">
-        <button onclick="setTime('valve1', 'open', document.getElementById('openTimeValve1').value)">Set Open Time</button>
-    </div>
-    <div class="time-input">
-        <label class="label">Set Close Time for Valve 1 (HH:MM):</label>
-        <input type="time" id="closeTimeValve1">
-        <button onclick="setTime('valve1', 'close', document.getElementById('closeTimeValve1').value)">Set Close Time</button>
-    </div>
+    <!-- Valve Controls -->
 
-    <!-- Valve 2 -->
-    <div class="time-input">
-        <label class="label">Set Open Time for Valve 2 (HH:MM):</label>
-        <input type="time" id="openTimeValve2">
-        <button onclick="setTime('valve2', 'open', document.getElementById('openTimeValve2').value)">Set Open Time</button>
-    </div>
-    <div class="time-input">
-        <label class="label">Set Close Time for Valve 2 (HH:MM):</label>
-        <input type="time" id="closeTimeValve2">
-        <button onclick="setTime('valve2', 'close', document.getElementById('closeTimeValve2').value)">Set Close Time</button>
-    </div>
+        <!-- Valve 1 -->
+        <div class="valve-control">
+            <h2>Valve 1</h2>
+            <button class="button" id="toggleValve1" onclick="toggleValveStatus('Valve1')">Open Valve 1</button>
+            <div class="time-input">
+                <label class="label">Set Schedule for Valve 1 (Open - Close HH:MM):</label>
+                <input type="time" id="openTimeValve1">
+                <input type="time" id="closeTimeValve1">
+                <button onclick="setTime('Valve1', document.getElementById('openTimeValve1').value, document.getElementById('closeTimeValve1').value)">Set Schedule</button>
+            </div>
+        </div>
 
-    <!-- Valve 3 -->
-    <div class="time-input">
-        <label class="label">Set Open Time for Valve 3 (HH:MM):</label>
-        <input type="time" id="openTimeValve3">
-        <button onclick="setTime('valve3', 'open', document.getElementById('openTimeValve3').value)">Set Open Time</button>
-    </div>
-    <div class="time-input">
-        <label class="label">Set Close Time for Valve 3 (HH:MM):</label>
-        <input type="time" id="closeTimeValve3">
-        <button onclick="setTime('valve3', 'close', document.getElementById('closeTimeValve3').value)">Set Close Time</button>
-    </div>
-    
-     <!-- Valve 4 -->
-    <div>
-        <button class="button" onclick="changeValveStatus('valve4', 'open')">Open Valve 4</button>
-        <button class="button button-close" onclick="changeValveStatus('valve4', 'close')">Close Valve 4</button>
-    </div>
+        <!-- Valve 2 -->
+        <div class="valve-control">
+            <h2>Valve 2</h2>
+            <button class="button" id="toggleValve2" onclick="toggleValveStatus('Valve2')">Open Valve 2</button>
+            <div class="time-input">
+                <label class="label">Set Schedule for Valve 2 (Open - Close HH:MM):</label>
+                <input type="time" id="openTimeValve2">
+                <input type="time" id="closeTimeValve2">
+                <button onclick="setTime('Valve2', document.getElementById('openTimeValve2').value, document.getElementById('closeTimeValve2').value)">Set Schedule</button>
+            </div>
+        </div>
 
-    <!-- Schedule Settings for Valve 4 -->
-    <div class="time-input">
-        <label class="label">Set Open Time for Valve 4 (HH:MM):</label>
-        <input type="time" id="openTimeValve4">
-        <button onclick="setTime('valve4', 'open', document.getElementById('openTimeValve4').value)">Set Open Time</button>
-    </div>
-    <div class="time-input">
-        <label class="label">Set Close Time for Valve 4 (HH:MM):</label>
-        <input type="time" id="closeTimeValve4">
-        <button onclick="setTime('valve4', 'close', document.getElementById('closeTimeValve4').value)">Set Close Time</button>
-    </div>
+        <!-- Valve 3 -->
+        <div class="valve-control">
+            <h2>Valve 3</h2>
+            <button class="button" id="toggleValve3" onclick="toggleValveStatus('Valve3')">Open Valve 3</button>
+            <div class="time-input">
+                <label class="label">Set Schedule for Valve 3 (Open - Close HH:MM):</label>
+                <input type="time" id="openTimeValve3">
+                <input type="time" id="closeTimeValve3">
+                <button onclick="setTime('Valve3', document.getElementById('openTimeValve3').value, document.getElementById('closeTimeValve3').value)">Set Schedule</button>
+            </div>
+        </div>
+
+        <!-- Valve 4 -->
+        <div class="valve-control">
+            <h2>Valve 4</h2>
+            <button class="button" id="toggleValve4" onclick="toggleValveStatus('Valve4')">Open Valve 4</button>
+            <div class="time-input">
+                <label class="label">Set Schedule for Valve 4 (Open - Close HH:MM):</label>
+                <input type="time" id="openTimeValve4">
+                <input type="time" id="closeTimeValve4">
+                <button onclick="setTime('Valve4', document.getElementById('openTimeValve4').value, document.getElementById('closeTimeValve4').value)">Set Schedule</button>
+            </div>
+        </div>
+
+    <!-- End Repeat -->
+
     <script>
-        function sendRequest(valve, action, time = null) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:5000/control", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(JSON.stringify({valve: valve, action: action, time: time}));
-
-        xhr.onload = function() {
-            console.log(xhr.responseText);
-            }
-        }
-
-        function changeValveStatus(valve, action) {
+        function toggleValveStatus(valve) {
+            var button = document.getElementById('toggle' + valve);
+            var isOpen = button.innerHTML.includes('Open');
+            var action = isOpen ? 'close' : 'open';
             sendRequest(valve, action);
+            button.innerHTML = (isOpen ? 'Close' : 'Open') + ' ' + valve;
+            button.className = isOpen ? 'button button-close' : 'button';
         }
 
-        function setTime(valve, action, time) {
-            sendRequest(valve, action, time);
+        function setTime(valve, openTime, closeTime) {
+            sendRequest(valve, 'schedule', openTime, closeTime);
+        }
+
+        function sendRequest(valve, action, openTime = null, closeTime = null) {
+            // AJAX request logic
         }
     </script>
 </body>
